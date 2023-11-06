@@ -1,0 +1,67 @@
+{
+    "version": "1.3.0",
+    "codebase": {
+        "task": "Segmentation",
+        "codebase": "mmseg",
+        "version": "1.2.1",
+        "pth": "deeplabv3plus_r18-d8_769x769_80k_cityscapes_20201226_083346-f326e06a.pth",
+        "config": "deeplabv3plus_r18-d8_4xb2-80k_cityscapes-769x769.py"
+    },
+    "codebase_config": {
+        "type": "mmseg",
+        "task": "Segmentation",
+        "with_argmax": true
+    },
+    "onnx_config": {
+        "type": "onnx",
+        "export_params": true,
+        "keep_initializers_as_inputs": false,
+        "opset_version": 11,
+        "save_file": "end2end.onnx",
+        "input_names": [
+            "input"
+        ],
+        "output_names": [
+            "output"
+        ],
+        "input_shape": [
+            512,
+            512
+        ],
+        "optimize": true
+    },
+    "backend_config": {
+        "type": "tensorrt",
+        "common_config": {
+            "fp16_mode": false,
+            "max_workspace_size": 1073741824
+        },
+        "model_inputs": [
+            {
+                "input_shapes": {
+                    "input": {
+                        "min_shape": [
+                            1,
+                            3,
+                            512,
+                            512
+                        ],
+                        "opt_shape": [
+                            1,
+                            3,
+                            512,
+                            512
+                        ],
+                        "max_shape": [
+                            1,
+                            3,
+                            512,
+                            512
+                        ]
+                    }
+                }
+            }
+        ]
+    },
+    "calib_config": {}
+}

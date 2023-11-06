@@ -9,11 +9,11 @@ from mmdeploy_runtime import Segmentor
 def parse_args():
     parser = argparse.ArgumentParser(
         description='show how to use sdk python api')
-    parser.add_argument('device_name', help='name of device, cuda or cpu')
+    parser.add_argument('--device_name', help='name of device, cuda or cpu')
     parser.add_argument(
-        'model_path',
+        '--model_path',
         help='path of mmdeploy SDK model dumped by model converter')
-    parser.add_argument('image_path', help='path of an image')
+    parser.add_argument('--image_path', help='path of an image')
     args = parser.parse_args()
     return args
 
@@ -30,10 +30,12 @@ def get_palette(num_classes=256):
 def main():
     args = parse_args()
 
-    img = cv2.imread(args.image_path)
-
-    segmentor = Segmentor(
-        model_path=args.model_path, device_name=args.device_name, device_id=0)
+    # img = cv2.imread(args.image_path)
+    img = cv2.imread('/home/zph/3rdParty/mmdeploy/demo/python/xingzheng_A_buildings.png')
+    print('args.device_name = ',args.device_name)
+    # segmentor = Segmentor(
+    #     model_path=args.model_path, device_name=args.device_name, device_id=0)
+    segmentor = Segmentor('/home/zph/3rdParty/mmdeploy/mmdeploy_models/mmseg/ort', 'cpu', device_id=0)
     seg = segmentor(img)
     if seg.dtype == np.float32:
         seg = np.argmax(seg, axis=0)

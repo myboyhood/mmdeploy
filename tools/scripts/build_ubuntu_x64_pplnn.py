@@ -142,7 +142,7 @@ def main():
 
     # install pplcv and pplnn
     nvcc = cmd_result('which nvcc')
-    build_cuda = False
+    build_cuda = True
     if nvcc is not None and len(nvcc) > 1:
         build_cuda = True
     pplcv_cmake_dir = install_pplcv(dep_dir, build_cuda)
